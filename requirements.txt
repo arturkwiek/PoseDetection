@@ -1,0 +1,5 @@
+numpy>=1.24,<3.0
+opencv-python>=4.8,<5.0
+dlib>=19.24
+# MediaPipe for pose mode (typically available on 64-bit Raspberry Pi OS)
+mediapipe>=0.10; platform_machine == "aarch64"

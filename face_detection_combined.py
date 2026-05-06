@@ -48,6 +48,11 @@ if not cap.isOpened():
 print("Naciśnij 'q', aby zakończyć.")
 print("Naciśnij: 1=TWARZ, 2=LANDMARKS, 3=POSE, 4=ALL")
 
+# Na niektorych backendach OpenCV (np. RPi) jawne utworzenie okna
+# zapobiega tworzeniu kolejnych instancji podczas odswiezania.
+window_name = "FaceDetectionCombined"
+cv2.namedWindow(window_name, cv2.WINDOW_NORMAL)
+
 # Tryby działania
 MODE_FACE = "face"
 MODE_LANDMARKS = "landmarks"
@@ -192,7 +197,11 @@ while True:
         1,
     )
 
-    cv2.imshow('Detekcja twarzy i punktów charakterystycznych', frame)
+    cv2.imshow(window_name, frame)
+
+    # Jezeli okno zostalo zamkniete z menedzera okien, zakoncz petle.
+    if cv2.getWindowProperty(window_name, cv2.WND_PROP_VISIBLE) < 1:
+        break
 
     key = cv2.waitKey(1) & 0xFF
     if key == ord('q'):
